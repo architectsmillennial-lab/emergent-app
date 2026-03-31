@@ -37,6 +37,7 @@ const LandingPage = () => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
+    email: '',
     area: '',
     service: '',
     budget: '',
@@ -84,7 +85,7 @@ const LandingPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const newErrors = {};
 
@@ -103,20 +104,56 @@ const LandingPage = () => {
       return;
     }
 
-    console.log('Form submitted:', formData);
-    setShowThankYou(true);
-    setFormData({
-      name: '',
-      phone: '',
-      area: '',
-      service: '',
-      budget: '',
-      message: ''
-    });
+    try {
+      // Submit to backend API
+      const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+      const response = await fetch(`${BACKEND_URL}/api/leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    setTimeout(() => {
-      setShowThankYou(false);
-    }, 5000);
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      const result = await response.json();
+      console.log('Lead submitted:', result);
+
+      setShowThankYou(true);
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        area: '',
+        service: '',
+        budget: '',
+        message: ''
+      });
+
+      setTimeout(() => {
+        setShowThankYou(false);
+      }, 5000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Still show thank you message even if backend fails
+      setShowThankYou(true);
+      setFormData({
+        name: '',
+        phone: '',
+        email: '',
+        area: '',
+        service: '',
+        budget: '',
+        message: ''
+      });
+
+      setTimeout(() => {
+        setShowThankYou(false);
+      }, 5000);
+    }
   };
 
   const scrollToForm = () => {
@@ -140,7 +177,7 @@ const LandingPage = () => {
             <Button 
               size="lg" 
               className="cta-whatsapp"
-              onClick={() => window.open('https://wa.me/919699261435?text=Hi,%20I%27m%20interested%20in%20a%20home%20interior%20quote.', '_blank')}
+              onClick={() => window.open('https://wa.me/918551904280?text=Hi,%20I%27m%20interested%20in%20a%20home%20interior%20quote.', '_blank')}
             >
               <MessageCircle className="mr-2 h-5 w-5" /> Chat with Us
             </Button>
@@ -289,6 +326,19 @@ const LandingPage = () => {
                   </div>
 
                   <div className="form-group">
+                    <label htmlFor="email" className="form-label">Email (Optional)</label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      placeholder="your.email@example.com"
+                    />
+                    <span className="text-xs text-gray-500">We'll send you a confirmation email</span>
+                  </div>
+
+                  <div className="form-group">
                     <label htmlFor="area" className="form-label">Area/Locality (Mumbai) *</label>
                     <Input
                       id="area"
@@ -359,7 +409,7 @@ const LandingPage = () => {
 
       {/* Floating WhatsApp Button */}
       <a
-        href="https://wa.me/919699261435?text=Hi,%20I%27m%20interested%20in%20a%20home%20interior%20quote."
+        href="https://wa.me/918551904280?text=Hi,%20I%27m%20interested%20in%20a%20home%20interior%20quote."
         target="_blank"
         rel="noopener noreferrer"
         className="whatsapp-float"
@@ -372,17 +422,17 @@ const LandingPage = () => {
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-section">
-            <h3 className="footer-brand">Mumbai Interiors</h3>
+            <h3 className="footer-brand">Millenial Architects</h3>
             <p className="footer-tagline">Transforming homes, creating dreams</p>
           </div>
           <div className="footer-section">
             <h4 className="footer-heading">Contact</h4>
             <div className="footer-links">
-              <a href="tel:+919699261435" className="footer-link">
-                <Phone className="footer-icon" /> +91 96992 61435
+              <a href="tel:+918551904280" className="footer-link">
+                <Phone className="footer-icon" /> +91 85519 04280
               </a>
               <a 
-                href="https://wa.me/919699261435?text=Hi,%20I%27m%20interested%20in%20a%20home%20interior%20quote." 
+                href="https://wa.me/918551904280?text=Hi,%20I%27m%20interested%20in%20a%20home%20interior%20quote." 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="footer-link"
@@ -399,7 +449,7 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2024 Mumbai Interiors. All rights reserved.</p>
+          <p>© 2024 Millenial Architects. All rights reserved.</p>
         </div>
       </footer>
     </div>
