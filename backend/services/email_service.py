@@ -218,5 +218,3 @@ class EmailService:
         if lead_data.get('email'):
             return self.send_email(lead_data['email'], subject, html_content)
         return True  # Skip if no email provided
-
-email_service = EmailService()

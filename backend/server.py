@@ -14,7 +14,7 @@ import sys
 # Import models and services
 sys.path.append(str(Path(__file__).parent))
 from models.lead import Lead, LeadCreate
-from services.email_service import email_service
+from services.email_service import EmailService
 
 
 ROOT_DIR = Path(__file__).parent
@@ -24,6 +24,9 @@ load_dotenv(ROOT_DIR / '.env')
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
+
+# Initialize email service after loading env
+email_service = EmailService()
 
 # Create the main app without a prefix
 app = FastAPI()
