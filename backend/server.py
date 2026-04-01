@@ -153,6 +153,41 @@ async def get_lead(lead_id: str):
         logger.error(f"Error fetching lead: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to fetch lead: {str(e)}")
 
+@api_router.get("/leads/report/summary")
+async def get_leads_summary():
+    """Get a summary report of all leads"""
+    try:
+        leads = await db.leads.find({}, {"_id": 0}).to_list(1000)
+        
+        total = len(leads)
+        by_service = {}
+        by_budget = {}
+        by_area = {}
+        by_status = {}
+        
+        for lead in leads:
+            service = lead.get('service', 'Unknown')
+            budget = lead.get('budget', 'Unknown')
+            area = lead.get('area', 'Unknown')
+            status = lead.get('status', 'new')
+            
+            by_service[service] = by_service.get(service, 0) + 1
+            by_budget[budget] = by_budget.get(budget, 0) + 1
+            by_area[area] = by_area.get(area, 0) + 1
+            by_status[status] = by_status.get(status, 0) + 1
+        
+        return {
+            "total_leads": total,
+            "by_service": by_service,
+            "by_budget": by_budget,
+            "by_area": by_area,
+            "by_status": by_status,
+            "latest_leads": leads[:5] if leads else []
+        }
+    except Exception as e:
+        logger.error(f"Error generating summary: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to generate summary: {str(e)}")
+
 # Include the router in the main app
 app.include_router(api_router)
 
