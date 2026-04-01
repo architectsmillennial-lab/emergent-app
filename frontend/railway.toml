@@ -3,6 +3,8 @@ builder = "NIXPACKS"
 
 [deploy]
 startCommand = "yarn start"
+healthcheckPath = "/"
+healthcheckTimeout = 100
 
 [build.env]
 NODE_VERSION = "18"
