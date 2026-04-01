@@ -443,8 +443,8 @@ const LandingPage = () => {
           </div>
           <div className="footer-section">
             <h4 className="footer-heading">Follow Us</h4>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="footer-link">
-              <Instagram className="footer-icon" /> Instagram
+            <a href="https://www.instagram.com/millennial.arch" target="_blank" rel="noopener noreferrer" className="footer-link">
+              <Instagram className="footer-icon" /> @millennial.arch
             </a>
           </div>
         </div>
