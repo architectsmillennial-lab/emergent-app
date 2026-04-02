@@ -170,6 +170,10 @@ async def get_lead(lead_id: str):
         logger.error(f"Error fetching lead: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to fetch lead: {str(e)}")
 
+@app.get("/")
+async def health():
+    return {"status": "ok"}
+
 # Include the router in the main app
 app.include_router(api_router)
 
