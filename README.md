@@ -69,7 +69,7 @@ REACT_APP_BACKEND_URL=https://your-backend-url.render.com
 ```bash
 cd frontend
 yarn install
-yarn start
+yarn dev
 ```
 
 ### Backend

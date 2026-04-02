@@ -76,7 +76,7 @@ uvicorn server:app --host 0.0.0.0 --port $PORT
 MONGO_URL=<Railway MongoDB connection string>
 DB_NAME=millenial_architects
 GMAIL_USER=architectsmillennial@gmail.com
-GMAIL_PASSWORD=tlurzumbflbqhmnd
+GMAIL_PASSWORD=<your_gmail_app_password>
 BUSINESS_EMAIL=architectsmillennial@gmail.com
 CORS_ORIGINS=*
 ```

@@ -33,7 +33,7 @@ Since you have a **full-stack application** (React frontend + FastAPI backend + 
    MONGO_URL=your_mongodb_atlas_connection_string
    DB_NAME=millenial_architects
    GMAIL_USER=architectsmillennial@gmail.com
-   GMAIL_PASSWORD=tlurzumbflbqhmnd
+   GMAIL_PASSWORD=your_gmail_app_password
    BUSINESS_EMAIL=architectsmillennial@gmail.com
    CORS_ORIGINS=*
    ```

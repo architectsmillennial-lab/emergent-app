@@ -60,7 +60,7 @@ GMAIL_USER
 architectsmillennial@gmail.com
 
 GMAIL_PASSWORD
-tlurzumbflbqhmnd
+<your_gmail_app_password>
 
 BUSINESS_EMAIL
 architectsmillennial@gmail.com
@@ -87,7 +87,7 @@ CORS_ORIGINS
 4. Go to **Settings** tab:
    - **Root Directory:** `frontend` (if deploying whole repo)
    - **Build Command:** `yarn build`
-   - **Start Command:** `yarn start` (for dev) or serve the build
+   - **Start Command:** `yarn start` (serves the production build)
 
 5. Go to **Variables** tab and add:
 
@@ -208,7 +208,7 @@ You should now have **3 services** in Railway:
 MONGO_URL=<Railway MongoDB connection string>
 DB_NAME=millenial_architects
 GMAIL_USER=architectsmillennial@gmail.com
-GMAIL_PASSWORD=tlurzumbflbqhmnd
+GMAIL_PASSWORD=<your_gmail_app_password>
 BUSINESS_EMAIL=architectsmillennial@gmail.com
 CORS_ORIGINS=<Your frontend Railway URL>
 ```
