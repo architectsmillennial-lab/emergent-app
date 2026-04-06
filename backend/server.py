@@ -31,11 +31,36 @@ logger = logging.getLogger(__name__)
 def _require_env(name: str) -> str:
     value = os.environ.get(name)
     if not value:
-        raise RuntimeError(
+        message = (
             f"Missing required environment variable '{name}'. "
-            f"Set it in backend/.env (see backend/.env.example) or your deployment settings."
+            "Set it in backend/.env (see backend/.env.example) or your deployment settings."
         )
+        logger.critical(message)
+        raise RuntimeError(message)
     return value
+
+def _resolve_cors_settings() -> tuple[list[str], bool]:
+    raw_origins = os.environ.get("CORS_ORIGINS", "*")
+    origins = [origin.strip() for origin in raw_origins.split(",") if origin.strip()]
+    allow_credentials = True
+    running_on_railway = bool(os.environ.get("RAILWAY_PROJECT_ID"))
+
+    # Browsers reject credentialed CORS with wildcard origin.
+    if "*" in origins and allow_credentials:
+        if running_on_railway:
+            message = (
+                "Invalid CORS configuration for Railway: CORS_ORIGINS cannot be '*' "
+                "when allow_credentials=True. Set CORS_ORIGINS to your frontend URL."
+            )
+            logger.critical(message)
+            raise RuntimeError(message)
+        logger.warning(
+            "CORS_ORIGINS='*' with allow_credentials=True is not valid for browser credentialed requests. "
+            "Disabling credentials for this configuration."
+        )
+        allow_credentials = False
+
+    return origins, allow_credentials
 
 # MongoDB connection
 mongo_url = _require_env('MONGO_URL')
@@ -177,10 +202,11 @@ async def health():
 # Include the router in the main app
 app.include_router(api_router)
 
+cors_origins, cors_allow_credentials = _resolve_cors_settings()
 app.add_middleware(
     CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=os.environ.get('CORS_ORIGINS', '*').split(','),
+    allow_credentials=cors_allow_credentials,
+    allow_origins=cors_origins,
     allow_methods=["*"],
     allow_headers=["*"],
 )
