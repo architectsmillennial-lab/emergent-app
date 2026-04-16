@@ -291,9 +291,30 @@ const LandingPage = () => {
                   <Check className="thank-you-icon" />
                 </div>
                 <h3 className="thank-you-title">Thank You!</h3>
+                
+                {/* Quote Number Display */}
+                {quoteNumber && (
+                  <div className="quote-number-display-card">
+                    <p className="quote-id-label">Your Quote ID</p>
+                    <h2 className="quote-id-value">{quoteNumber}</h2>
+                    <p className="quote-id-hint">Save this to track your request</p>
+                  </div>
+                )}
+                
                 <p className="thank-you-text">
                   We've received your request. Our team will contact you within 24 hours to discuss your project.
                 </p>
+                
+                {/* Track Quote Button */}
+                {quoteNumber && (
+                  <Button
+                    onClick={() => window.location.href = `/track/${quoteNumber}`}
+                    className="track-quote-button"
+                    size="lg"
+                  >
+                    Track Your Quote
+                  </Button>
+                )}
               </CardContent>
             </Card>
           ) : (

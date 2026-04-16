@@ -650,3 +650,548 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* ========================================
+   QUOTE TRACKING SYSTEM STYLES
+   ======================================== */
+
+/* Track Quote Page */
+.track-quote-page,
+.quote-status-page {
+  min-height: 100vh;
+  background-color: var(--color-warm-white);
+}
+
+.track-header,
+.status-header {
+  padding: 1.5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.back-button {
+  color: var(--color-warm-brown) !important;
+}
+
+.track-container,
+.status-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.track-content {
+  width: 100%;
+}
+
+.track-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--color-dark-brown);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.track-subtitle {
+  text-align: center;
+  color: var(--color-warm-brown);
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+}
+
+.track-card {
+  background: white;
+  border: 1px solid var(--color-warm-beige);
+}
+
+.track-card-content {
+  padding: 3rem;
+}
+
+.track-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-warm-brown);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.quote-input {
+  padding-right: 3rem;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.input-hint {
+  font-size: 0.85rem;
+  color: var(--color-warm-brown);
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.track-submit-button {
+  width: 100%;
+  background-color: var(--color-terracotta) !important;
+  margin-top: 1rem;
+}
+
+.track-help {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-warm-beige);
+}
+
+.help-text {
+  color: var(--color-dark-brown);
+  margin-bottom: 0.75rem;
+}
+
+.help-list {
+  margin-top: 0.5rem;
+  padding-left: 1.5rem;
+  color: var(--color-warm-brown);
+  line-height: 1.8;
+}
+
+.help-list li {
+  margin-bottom: 0.5rem;
+}
+
+.track-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: start;
+  gap: 1rem;
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.feature-text h3 {
+  font-family: var(--font-serif);
+  color: var(--color-dark-brown);
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.feature-text p {
+  color: var(--color-warm-brown);
+  font-size: 0.95rem;
+}
+
+/* Quote Number Display in Thank You Card */
+.quote-number-display-card {
+  background: linear-gradient(135deg, var(--color-terracotta-light) 0%, var(--color-terracotta) 100%);
+  padding: 2rem;
+  border-radius: 12px;
+  margin: 2rem 0;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(193, 116, 83, 0.2);
+}
+
+.quote-id-label {
+  color: white;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.quote-id-value {
+  color: white;
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+.quote-id-hint {
+  color: white;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-top: 0.5rem;
+}
+
+.track-quote-button {
+  background-color: var(--color-soft-gold) !important;
+  color: var(--color-dark-brown) !important;
+  margin-top: 1.5rem;
+  font-weight: 600 !important;
+}
+
+.track-quote-button:hover {
+  background-color: #C4A137 !important;
+}
+
+/* Quote Status Page */
+.quote-info-card {
+  background: linear-gradient(135deg, var(--color-terracotta-light) 0%, var(--color-terracotta) 100%);
+  border: none;
+  margin-bottom: 3rem;
+  box-shadow: 0 8px 24px rgba(193, 116, 83, 0.2);
+}
+
+.quote-info-content {
+  padding: 2.5rem;
+}
+
+.quote-header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.quote-number-display .quote-label {
+  color: white;
+  opacity: 0.9;
+  font-size: 0.9rem;
+  display: block;
+}
+
+.quote-number-display .quote-number {
+  color: white;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin: 0.5rem 0 0 0;
+  letter-spacing: 2px;
+}
+
+.quote-status-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(10px);
+  font-weight: 600;
+}
+
+.status-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.quote-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detail-label {
+  color: white;
+  opacity: 0.8;
+  font-size: 0.9rem;
+}
+
+.detail-value {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Timeline Section */
+.timeline-section {
+  margin-top: 3rem;
+}
+
+.timeline-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: var(--color-dark-brown);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.timeline-subtitle {
+  text-align: center;
+  color: var(--color-warm-brown);
+  margin-bottom: 3rem;
+  font-size: 1.1rem;
+}
+
+.timeline {
+  position: relative;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 2rem;
+  padding-bottom: 3rem;
+  position: relative;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.timeline-icon {
+  width: 48px;
+  height: 48px;
+  z-index: 2;
+  stroke-width: 2;
+}
+
+.timeline-icon.completed {
+  color: var(--color-success);
+  fill: var(--color-success);
+}
+
+.timeline-icon.current {
+  color: var(--color-terracotta);
+  fill: none;
+}
+
+.timeline-icon.current.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+  50% { 
+    opacity: 0.7; 
+    transform: scale(1.1); 
+  }
+}
+
+.timeline-icon.pending {
+  color: #D4D4D4;
+  fill: none;
+}
+
+.timeline-line {
+  width: 3px;
+  flex: 1;
+  background-color: #E5E5E5;
+  margin-top: 0.5rem;
+  border-radius: 2px;
+}
+
+.timeline-line.completed {
+  background-color: var(--color-success);
+}
+
+.timeline-content {
+  flex: 1;
+  padding-top: 0.5rem;
+}
+
+.timeline-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.timeline-step-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  color: var(--color-dark-brown);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.step-icon {
+  font-size: 1.5rem;
+}
+
+.timeline-date {
+  font-size: 0.9rem;
+  color: var(--color-warm-brown);
+  font-weight: 500;
+  background-color: var(--color-cream);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}
+
+.timeline-description {
+  color: var(--color-warm-brown);
+  margin-top: 0.5rem;
+  line-height: 1.6;
+}
+
+.timeline-note {
+  background-color: var(--color-cream);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  border-left: 3px solid var(--color-terracotta);
+}
+
+.timeline-note strong {
+  color: var(--color-dark-brown);
+}
+
+/* WhatsApp CTA Card */
+.whatsapp-cta-card {
+  background: linear-gradient(135deg, #25D366 0%, #20BA5A 100%);
+  border: none;
+  margin-top: 3rem;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-cta-content {
+  padding: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.whatsapp-cta-text h3 {
+  color: white;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.whatsapp-cta-text p {
+  color: white;
+  opacity: 0.95;
+  margin: 0;
+}
+
+.whatsapp-cta-button {
+  background-color: white !important;
+  color: #25D366 !important;
+  font-weight: 600 !important;
+}
+
+.whatsapp-cta-button:hover {
+  background-color: #F5F5F5 !important;
+}
+
+/* Loading & Error States */
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 2rem;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--color-warm-beige);
+  border-top-color: var(--color-terracotta);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-container h2 {
+  font-family: var(--font-serif);
+  color: var(--color-dark-brown);
+  margin-bottom: 1rem;
+}
+
+.error-container p {
+  color: var(--color-warm-brown);
+  margin-bottom: 2rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .track-card-content {
+    padding: 2rem 1.5rem;
+  }
+  
+  .timeline-item {
+    gap: 1rem;
+  }
+  
+  .timeline-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .timeline-step-title {
+    font-size: 1.2rem;
+  }
+  
+  .quote-id-value {
+    font-size: 1.8rem;
+  }
+  
+  .quote-number-display .quote-number {
+    font-size: 1.8rem;
+  }
+  
+  .whatsapp-cta-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .whatsapp-cta-button {
+    width: 100%;
+  }
+  
+  .quote-info-content {
+    padding: 2rem 1.5rem;
+  }
+  
+  .track-features {
+    grid-template-columns: 1fr;
+  }
+}
+
