@@ -1195,3 +1195,28 @@ html {
   }
 }
 
+
+/* Track Quote Link in Hero */
+.track-quote-link-hero {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.track-link-button {
+  background: none;
+  border: none;
+  color: var(--color-warm-white);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.3s ease, text-decoration-color 0.3s ease;
+  font-family: var(--font-sans);
+}
+
+.track-link-button:hover {
+  color: var(--color-soft-gold);
+  text-decoration-color: var(--color-soft-gold);
+}
+

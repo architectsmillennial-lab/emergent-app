@@ -18,7 +18,8 @@ import {
   ArrowRight,
   Phone,
   Instagram,
-  Check
+  Check,
+  Search
 } from 'lucide-react';
 import { services, trustPoints, testimonials, galleryProjects, serviceOptions, budgetOptions } from '../data/mock';
 
@@ -183,6 +184,16 @@ const LandingPage = () => {
             >
               <MessageCircle className="mr-2 h-5 w-5" /> Chat with Us
             </Button>
+          </div>
+          
+          {/* Track Quote Link */}
+          <div className="track-quote-link-hero">
+            <button 
+              onClick={() => window.location.href = '/track'}
+              className="track-link-button"
+            >
+              Already have a Quote ID? Track it here →
+            </button>
           </div>
         </div>
       </section>
@@ -447,6 +458,17 @@ const LandingPage = () => {
           <div className="footer-section">
             <h3 className="footer-brand">Millenial Architects</h3>
             <p className="footer-tagline">Transforming homes, creating dreams</p>
+          </div>
+          <div className="footer-section">
+            <h4 className="footer-heading">Quick Links</h4>
+            <div className="footer-links">
+              <a href="/track" className="footer-link">
+                <Search className="footer-icon" /> Track Your Quote
+              </a>
+              <a href="#services" className="footer-link">
+                Our Services
+              </a>
+            </div>
           </div>
           <div className="footer-section">
             <h4 className="footer-heading">Contact</h4>
