@@ -13,8 +13,9 @@ import sys
 
 # Import models and services
 sys.path.append(str(Path(__file__).parent))
-from models.lead import Lead, LeadCreate
+from models.lead import Lead, LeadCreate, StatusUpdate, StatusHistory
 from services.email_service import EmailService
+from utils.quote_utils import generate_quote_number, get_status_display_info, get_all_statuses
 
 
 ROOT_DIR = Path(__file__).parent
@@ -80,35 +81,42 @@ async def get_status_checks():
 async def create_lead(lead_input: LeadCreate):
     """
     Create a new lead from quote form submission
-    Sends email notifications to business and customer
+    Generates unique quote number and sends email notifications
     """
     try:
+        # Generate unique quote number
+        quote_number = await generate_quote_number(db)
+        
         # Create lead object
         lead_data = lead_input.model_dump()
+        lead_data['quote_number'] = quote_number
         lead = Lead(**lead_data)
         
         # Save to database
         doc = lead.model_dump()
         doc['created_at'] = doc['created_at'].isoformat()
+        # Convert status_history to dict
+        doc['status_history'] = [h.model_dump() for h in lead.status_history]
+        for h in doc['status_history']:
+            h['timestamp'] = h['timestamp'].isoformat()
+        
         await db.leads.insert_one(doc)
         
         # Send email notifications
         try:
             # Send notification to business owner
-            email_service.send_lead_notification(lead_data)
-            logger.info(f"Lead notification sent for: {lead.name}")
+            email_service.send_lead_notification({**lead_data, 'quote_number': quote_number})
+            logger.info(f"Lead notification sent for: {lead.name} ({quote_number})")
         except Exception as e:
             logger.error(f"Failed to send business notification: {str(e)}")
-            # Don't fail the request if email fails
         
         try:
             # Send confirmation to customer (if email provided)
             if lead_data.get('email'):
-                email_service.send_customer_confirmation(lead_data)
+                email_service.send_customer_confirmation({**lead_data, 'quote_number': quote_number})
                 logger.info(f"Customer confirmation sent to: {lead_data.get('email')}")
         except Exception as e:
             logger.error(f"Failed to send customer confirmation: {str(e)}")
-            # Don't fail the request if email fails
         
         return lead
     except Exception as e:
@@ -187,6 +195,121 @@ async def get_leads_summary():
     except Exception as e:
         logger.error(f"Error generating summary: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to generate summary: {str(e)}")
+
+@api_router.get("/leads/track/{quote_number}")
+async def track_quote(quote_number: str):
+    """
+    Track a quote by its quote number
+    Public endpoint for customers to check their quote status
+    """
+    try:
+        lead = await db.leads.find_one({"quote_number": quote_number.upper()}, {"_id": 0})
+        
+        if not lead:
+            raise HTTPException(status_code=404, detail="Quote not found")
+        
+        # Convert ISO strings back to datetime for response
+        if isinstance(lead.get('created_at'), str):
+            lead['created_at'] = datetime.fromisoformat(lead['created_at'])
+        
+        if 'status_history' in lead:
+            for h in lead['status_history']:
+                if isinstance(h.get('timestamp'), str):
+                    h['timestamp'] = datetime.fromisoformat(h['timestamp'])
+        
+        # Add status display info
+        all_statuses = get_all_statuses()
+        current_status_index = all_statuses.index(lead['status'])
+        
+        timeline = []
+        for i, status in enumerate(all_statuses):
+            status_info = get_status_display_info(status)
+            
+            # Check if this status is in history
+            history_item = next((h for h in lead.get('status_history', []) if h['status'] == status), None)
+            
+            timeline.append({
+                "status": status,
+                "label": status_info['label'],
+                "icon": status_info['icon'],
+                "description": status_info['description'],
+                "completed": i <= current_status_index,
+                "current": i == current_status_index,
+                "timestamp": history_item['timestamp'] if history_item else None,
+                "note": history_item.get('note') if history_item else None
+            })
+        
+        return {
+            "quote_number": lead['quote_number'],
+            "name": lead['name'],
+            "service": lead['service'],
+            "area": lead['area'],
+            "budget": lead['budget'],
+            "current_status": lead['status'],
+            "created_at": lead['created_at'],
+            "timeline": timeline
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error tracking quote: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to track quote: {str(e)}")
+
+@api_router.patch("/leads/{quote_id}/status")
+async def update_lead_status(quote_id: str, status_update: StatusUpdate):
+    """
+    Update the status of a lead
+    For admin use - requires authentication in production
+    """
+    try:
+        # Find the lead
+        lead = await db.leads.find_one(
+            {"$or": [{"id": quote_id}, {"quote_number": quote_id.upper()}]},
+            {"_id": 0}
+        )
+        
+        if not lead:
+            raise HTTPException(status_code=404, detail="Lead not found")
+        
+        # Create new status history entry
+        new_history = StatusHistory(
+            status=status_update.status,
+            note=status_update.note
+        )
+        
+        # Update the lead
+        update_doc = {
+            "status": status_update.status,
+            "$push": {
+                "status_history": {
+                    "status": status_update.status,
+                    "timestamp": new_history.timestamp.isoformat(),
+                    "note": status_update.note
+                }
+            }
+        }
+        
+        result = await db.leads.update_one(
+            {"$or": [{"id": quote_id}, {"quote_number": quote_id.upper()}]},
+            update_doc
+        )
+        
+        if result.modified_count == 0:
+            raise HTTPException(status_code=400, detail="Failed to update status")
+        
+        logger.info(f"Status updated for {lead.get('quote_number', quote_id)}: {status_update.status}")
+        
+        return {
+            "success": True,
+            "quote_number": lead.get('quote_number'),
+            "new_status": status_update.status,
+            "message": f"Status updated to {status_update.status}"
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error updating status: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Failed to update status: {str(e)}")
 
 # Include the router in the main app
 app.include_router(api_router)

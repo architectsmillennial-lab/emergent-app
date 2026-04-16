@@ -44,6 +44,7 @@ const LandingPage = () => {
     message: ''
   });
   const [showThankYou, setShowThankYou] = useState(false);
+  const [quoteNumber, setQuoteNumber] = useState('');
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -122,6 +123,7 @@ const LandingPage = () => {
       const result = await response.json();
       console.log('Lead submitted:', result);
 
+      setQuoteNumber(result.quote_number);
       setShowThankYou(true);
       setFormData({
         name: '',
