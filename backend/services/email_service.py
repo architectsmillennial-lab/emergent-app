@@ -39,7 +39,8 @@ class EmailService:
     
     def send_lead_notification(self, lead_data: dict):
         """Send notification to business owner about new lead"""
-        subject = f"🏠 New Quote Request from {lead_data['name']}"
+        quote_number = lead_data.get('quote_number', 'N/A')
+        subject = f"🏠 New Quote Request - {quote_number} - {lead_data['name']}"
         
         html_content = f"""
         <!DOCTYPE html>
@@ -51,6 +52,9 @@ class EmailService:
                 .header {{ background: linear-gradient(135deg, #C17453 0%, #A86243 100%); 
                            color: white; padding: 30px; text-align: center; border-radius: 8px 8px 0 0; }}
                 .header h1 {{ margin: 0; font-family: 'Playfair Display', serif; font-size: 28px; }}
+                .quote-number {{ background: rgba(255,255,255,0.2); padding: 12px 24px; border-radius: 30px;
+                                 display: inline-block; margin-top: 12px; font-size: 20px; font-weight: bold;
+                                 letter-spacing: 1px; }}
                 .content {{ background: #FAF7F2; padding: 30px; border-radius: 0 0 8px 8px; }}
                 .field {{ margin-bottom: 20px; }}
                 .label {{ font-weight: 600; color: #8B6F47; font-size: 14px; text-transform: uppercase; 
@@ -61,15 +65,23 @@ class EmailService:
                 .cta a {{ background: #C17453; color: white; padding: 15px 30px; text-decoration: none; 
                          border-radius: 6px; display: inline-block; font-weight: 600; }}
                 .footer {{ text-align: center; margin-top: 30px; color: #8B6F47; font-size: 12px; }}
+                .track-link {{ text-align: center; margin-top: 20px; padding: 15px; background: #F5F1E8;
+                              border-radius: 6px; }}
+                .track-link a {{ color: #C17453; text-decoration: none; font-weight: 600; }}
             </style>
         </head>
         <body>
             <div class="container">
                 <div class="header">
                     <h1>New Quote Request</h1>
+                    <div class="quote-number">Quote ID: {quote_number}</div>
                     <p style="margin: 10px 0 0 0; opacity: 0.9;">Someone is interested in your services!</p>
                 </div>
                 <div class="content">
+                    <div class="field">
+                        <div class="label">Quote ID</div>
+                        <div class="value">{quote_number}</div>
+                    </div>
                     <div class="field">
                         <div class="label">Customer Name</div>
                         <div class="value">{lead_data['name']}</div>
@@ -99,8 +111,14 @@ class EmailService:
                         <div class="value">{datetime.now().strftime('%d %B %Y, %I:%M %p')}</div>
                     </div>
                     <div class="cta">
-                        <a href="https://wa.me/91{lead_data['phone']}?text=Hi%20{lead_data['name']}%2C%20thank%20you%20for%20your%20interest%20in%20Millenial%20Architects.%20We%20received%20your%20quote%20request%20for%20{lead_data['service'].replace(' ', '%20')}.%20Let%27s%20discuss%20your%20project!">
+                        <a href="https://wa.me/91{lead_data['phone']}?text=Hi%20{lead_data['name']}%2C%20thank%20you%20for%20your%20interest%20in%20Millenial%20Architects.%20We%20received%20your%20quote%20request%20{quote_number}%20for%20{lead_data['service'].replace(' ', '%20')}.%20Let%27s%20discuss%20your%20project!">
                             Contact via WhatsApp
+                        </a>
+                    </div>
+                    <div class="track-link">
+                        <p style="margin: 0 0 8px 0; color: #4A3F35;">Track this quote online:</p>
+                        <a href="https://interior-quote-hub.preview.emergentagent.com/track/{quote_number}">
+                            View Quote Status →
                         </a>
                     </div>
                 </div>
@@ -116,7 +134,8 @@ class EmailService:
     
     def send_customer_confirmation(self, lead_data: dict):
         """Send auto-reply confirmation to customer"""
-        subject = "Thank you for your interest in Millenial Architects!"
+        quote_number = lead_data.get('quote_number', 'N/A')
+        subject = f"Your Quote Request Confirmed - {quote_number}"
         
         html_content = f"""
         <!DOCTYPE html>
@@ -128,6 +147,10 @@ class EmailService:
                 .header {{ background: linear-gradient(135deg, #C17453 0%, #A86243 100%); 
                            color: white; padding: 40px 30px; text-align: center; border-radius: 8px 8px 0 0; }}
                 .header h1 {{ margin: 0; font-family: 'Playfair Display', serif; font-size: 32px; }}
+                .quote-id-box {{ background: rgba(255,255,255,0.2); padding: 16px 24px; border-radius: 12px;
+                                 margin: 20px auto; display: inline-block; backdrop-filter: blur(10px); }}
+                .quote-id-label {{ font-size: 14px; opacity: 0.9; margin-bottom: 4px; }}
+                .quote-id-value {{ font-size: 24px; font-weight: bold; letter-spacing: 2px; }}
                 .content {{ background: #FAF7F2; padding: 30px; border-radius: 0 0 8px 8px; }}
                 .greeting {{ font-size: 18px; margin-bottom: 20px; }}
                 .message {{ background: white; padding: 20px; border-radius: 6px; 
@@ -139,7 +162,8 @@ class EmailService:
                 .detail-value {{ color: #4A3F35; }}
                 .cta {{ text-align: center; margin: 30px 0; }}
                 .cta a {{ background: #25D366; color: white; padding: 15px 30px; text-decoration: none; 
-                         border-radius: 6px; display: inline-block; font-weight: 600; }}
+                         border-radius: 6px; display: inline-block; font-weight: 600; margin: 5px; }}
+                .track-cta {{ background: #D4AF37 !important; }}
                 .footer {{ text-align: center; margin-top: 30px; padding-top: 20px; 
                           border-top: 1px solid #EDE7DD; color: #8B6F47; font-size: 14px; }}
             </style>
@@ -151,6 +175,10 @@ class EmailService:
                     <p style="margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;">
                         Transforming homes, creating dreams
                     </p>
+                    <div class="quote-id-box">
+                        <div class="quote-id-label">Your Quote ID</div>
+                        <div class="quote-id-value">{quote_number}</div>
+                    </div>
                 </div>
                 <div class="content">
                     <div class="greeting">
@@ -171,6 +199,10 @@ class EmailService:
                     </h3>
                     <div class="details">
                         <div class="detail-row">
+                            <div class="detail-label">Quote ID:</div>
+                            <div class="detail-value" style="font-weight: 700; color: #C17453;">{quote_number}</div>
+                        </div>
+                        <div class="detail-row">
                             <div class="detail-label">Service:</div>
                             <div class="detail-value">{lead_data['service']}</div>
                         </div>
@@ -184,8 +216,20 @@ class EmailService:
                         </div>
                     </div>
                     
+                    <div style="background: #F5F1E8; padding: 20px; border-radius: 6px; margin-top: 20px;">
+                        <p style="margin: 0 0 10px 0; font-weight: 600; color: #4A3F35;">
+                            📍 Track Your Quote Status
+                        </p>
+                        <p style="margin: 0; color: #4A3F35; font-size: 14px;">
+                            You can track the progress of your quote anytime using your Quote ID: <strong>{quote_number}</strong>
+                        </p>
+                    </div>
+                    
                     <div class="cta">
-                        <a href="https://wa.me/918551904280?text=Hi%2C%20I%20submitted%20a%20quote%20request%20for%20{lead_data['service'].replace(' ', '%20')}.%20I%20have%20a%20question.">
+                        <a href="https://interior-quote-hub.preview.emergentagent.com/track/{quote_number}" class="track-cta">
+                            Track Your Quote
+                        </a>
+                        <a href="https://wa.me/918551904280?text=Hi%2C%20I%20submitted%20quote%20{quote_number}%20for%20{lead_data['service'].replace(' ', '%20')}.%20I%20have%20a%20question.">
                             Chat with Us on WhatsApp
                         </a>
                     </div>
@@ -205,6 +249,9 @@ class EmailService:
                     <p style="margin: 0 0 10px 0; font-weight: 600;">Contact Us</p>
                     <p style="margin: 5px 0;">📞 +91 85519 04280</p>
                     <p style="margin: 5px 0;">📧 {self.sender_email}</p>
+                    <p style="margin: 15px 0 0 0; font-size: 12px; color: #8B6F47;">
+                        Save your Quote ID: <strong>{quote_number}</strong> for tracking
+                    </p>
                     <p style="margin: 15px 0 0 0; font-size: 12px; color: #8B6F47;">
                         © 2024 Millenial Architects. All rights reserved.
                     </p>
