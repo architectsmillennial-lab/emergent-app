@@ -1,0 +1,115 @@
+{
+  "project_name": "Millennial Architects Landing Page",
+  "theme": "Light",
+  "archetype": "Archetype 1: Organic & Earthy",
+  "design_philosophy": "Warm, aspirational, premium-yet-approachable. Leveraging generous spacing, editorial typography, and high-quality photography to build trust with middle-income families in Mumbai. No blues, no techy gradients.",
+  "colors": {
+    "primary": "#C17453",
+    "primary_hover": "#A86345",
+    "secondary_accent": "#D4AF37",
+    "background_base": "#FAF7F2",
+    "background_surface": "#FFFFFF",
+    "background_tinted": "#F3EFE9",
+    "text_primary": "#1C2B3A",
+    "text_secondary": "#4A5A6A",
+    "text_inverse": "#FFFFFF",
+    "border_subtle": "rgba(28, 43, 58, 0.1)"
+  },
+  "typography": {
+    "heading_font": "Playfair Display, serif",
+    "body_font": "Outfit, sans-serif",
+    "h1": "text-4xl sm:text-5xl lg:text-6xl tracking-tight leading-none font-bold text-[#1C2B3A]",
+    "h2": "text-3xl sm:text-4xl tracking-tight leading-tight font-bold text-[#1C2B3A]",
+    "h3": "text-xl sm:text-2xl font-semibold text-[#1C2B3A]",
+    "body_main": "text-base sm:text-lg leading-relaxed text-[#4A5A6A]",
+    "label": "text-sm tracking-[0.15em] uppercase font-semibold text-[#C17453]"
+  },
+  "spacing_and_layout": {
+    "section_padding": "py-20 md:py-32 px-6 md:px-12 max-w-7xl mx-auto",
+    "container_radius": "rounded-2xl",
+    "card_padding": "p-8 md:p-10",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8",
+    "alignment": "Mobile-first approach. Optical alignment for text and icons. Generous negative space between sections."
+  },
+  "motion_and_interaction": {
+    "global": "Smooth scrolling enabled via lenis.",
+    "hover_states": "Cards lift slightly (-translate-y-1) with soft ambient shadow increase (shadow-lg). Buttons shift background colors gracefully with 300ms transitions.",
+    "entrance_animations": "Staggered fade-up (opacity 0 to 1, y: 20 to 0) for lists and grids using framer-motion.",
+    "hero_parallax": "Hero background image scales slightly (1 to 1.05) on load or scroll, adding a premium cinematic feel."
+  },
+  "components": {
+    "hero": {
+      "layout": "Full screen (min-h-[90vh]) with absolute background image. Content aligned left or center-left.",
+      "overlay": "Gradient overlay for text legibility: bg-gradient-to-r from-[#1C2B3A]/80 via-[#1C2B3A]/40 to-transparent.",
+      "ctas": "Primary CTA 'Get Free Quote' uses Terracotta (#C17453). Secondary CTA 'WhatsApp' uses outline or soft white with Terracotta text."
+    },
+    "services_grid": {
+      "layout": "Asymmetrical Bento Grid. E.g., Kitchen (col-span-8), Wardrobes (col-span-4), etc.",
+      "style": "Cards use #FFFFFF background, subtle border, and soft shadow. Icons in Terracotta or Soft Gold.",
+      "tags": "One-liner benefits styled as subtle badges or distinct body text."
+    },
+    "why_us": {
+      "layout": "Text-heavy with bold typographic stats (e.g., '100+').",
+      "style": "Background section in tinted color (#F3EFE9). Big numbers in #C17453."
+    },
+    "gallery": {
+      "layout": "Grid of 6 images (grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6).",
+      "style": "Images fill containers. Hover reveals a sleek overlay with 'Service - Locality' label in #FFFFFF."
+    },
+    "testimonials": {
+      "layout": "3 columns on desktop, horizontal scroll or stack on mobile.",
+      "style": "Solid white cards, max 8px radius. Soft Gold (#D4AF37) for star ratings."
+    },
+    "quote_form": {
+      "layout": "Two-column layout: Left (Trust markers + Contact Info), Right (Form Card).",
+      "style": "Shadcn UI customized. Inputs have soft backgrounds (#F3EFE9) and no harsh black borders. Focus ring is #C17453/50.",
+      "cta": "Full-width #C17453 button."
+    },
+    "whatsapp_floating": {
+      "layout": "Fixed bottom-right (bottom-6 right-6), z-50.",
+      "style": "Circular or pill shape. Uses WhatsApp green (#25D366) or Terracotta depending on visual balance, but standard green usually converts best for WA."
+    }
+  },
+  "media": {
+    "hero": {
+      "url": "https://images.unsplash.com/photo-1763647972062-5e9cd48fb282?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwzfHx3YXJtJTIwbW9kZXJuJTIwbGl2aW5nJTIwcm9vbSUyMGludGVyaW9yfGVufDB8fHx8MTc3NzUyNTg1NXww&ixlib=rb-4.1.0&q=85",
+      "description": "Warm modern living room for hero section background."
+    },
+    "service_kitchen": {
+      "url": "https://images.unsplash.com/photo-1742280879518-ada47b660ccd?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NTN8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBtb2R1bGFyJTIwa2l0Y2hlbiUyMGludGVyaW9yfGVufDB8fHx8MTc3NzUyNTg1NXww&ixlib=rb-4.1.0&q=85",
+      "description": "Modern kitchen interior."
+    },
+    "service_wardrobe": {
+      "url": "https://images.unsplash.com/photo-1760072513393-b9d81f65dd7e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2MzR8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjBiZWRyb29tJTIwd2FyZHJvYmUlMjBpbnRlcmlvcnxlbnwwfHx8fDE3Nzc1MjU4NTV8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Modern bedroom with large wardrobe."
+    },
+    "gallery_images": [
+      "https://images.unsplash.com/photo-1761679296802-09d4d4687723?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwzfHxtb2Rlcm4lMjBhcGFydG1lbnQlMjBpbnRlcmlvciUyMHRyYW5zZm9ybWF0aW9ufGVufDB8fHx8MTc3NzUyNTg2NHww&ixlib=rb-4.1.0&q=85",
+      "https://images.unsplash.com/photo-1765766638330-a180e8a5a990?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBhcGFydG1lbnQlMjBpbnRlcmlvciUyMHRyYW5zZm9ybWF0aW9ufGVufDB8fHx8MTc3NzUyNTg2NHww&ixlib=rb-4.1.0&q=85",
+      "https://images.unsplash.com/photo-1761679296778-7f245d39148d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2OTF8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjBhcGFydG1lbnQlMjBpbnRlcmlvciUyMHRyYW5zZm9ybWF0aW9ufGVufDB8fHx8MTc3NzUyNTg2NHww&ixlib=rb-4.1.0&q=85",
+      "https://images.pexels.com/photos/9976125/pexels-photo-9976125.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "https://images.pexels.com/photos/31737858/pexels-photo-31737858.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "https://images.pexels.com/photos/2089696/pexels-photo-2089696.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+    ],
+    "testimonial_users": [
+      "https://images.unsplash.com/photo-1635152486997-dbbf555382b5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NjV8MHwxfHNlYXJjaHw0fHxpbmRpYW4lMjB1c2VyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzc3NTI1ODY0fDA&ixlib=rb-4.1.0&q=85",
+      "https://images.unsplash.com/photo-1710425808999-cee606a99f0f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NjV8MHwxfHNlYXJjaHwzfHxpbmRpYW4lMjB1c2VyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzc3NTI1ODY0fDA&ixlib=rb-4.1.0&q=85",
+      "https://images.unsplash.com/photo-1635152486512-548b3893d6e4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NjV8MHwxfHNlYXJjaHwyfHxpbmRpYW4lMjB1c2VyJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzc3NTI1ODY0fDA&ixlib=rb-4.1.0&q=85"
+    ]
+  },
+  "testing_attributes": {
+    "rules": "All interactive elements, buttons, form inputs, and major sections MUST include data-testid. Examples: data-testid='hero-quote-btn', data-testid='quote-form-submit'."
+  },
+  "libraries_and_packages": {
+    "icons": "lucide-react (default) or @phosphor-icons/react for premium line-art feel.",
+    "animation": "framer-motion, lenis (smooth scroll)."
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the color palette. Background should primarily be #FAF7F2.",
+    "Do NOT use default Inter font for headings. Use an editorial serif like Playfair Display or Cormorant Garamond.",
+    "Implement scroll-to-form logic securely.",
+    "Use custom Shadcn UI for the form, do not use native HTML selects/inputs.",
+    "Ensure the hero section background image overlay does not completely kill the image (max opacity 0.5 or use gradient from left).",
+    "Include a sticky WhatsApp button for mobile and desktop."
+  ]
+}
